@@ -11,9 +11,9 @@ async function main(){
             name:'task',
             choices:
             [
-                {name:'I want to view a list of all the Employees in my company', value:'list_employees'},
-                {name:'I want to view a list all employees working under a specific manager', value:'list_employees_bymanager'},
-                {name:'I want to view all employees by their position', value:'list_employees_byposition'}
+                {name:'I want to view a list of all the Employees in my company', value:'employees_all'},
+                {name:'I want to view a list all employees working under a specific manager', value:'employees_bymanager'},
+                {name:'I want to view all employees by their position', value:'employees_byposition'}
             ],
 
         }, // br close for the response object
