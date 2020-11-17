@@ -19,3 +19,23 @@ CREATE TABLE employee(
     FOREIGN KEY (manager_id) REFERENCES employee(id) ON DELETE SET NULL
     
 );
+
+CREATE TABLE role (
+
+	id INT NOT NULL AUTO_INCREMENT,
+    title VARCHAR(30) NOT NULL UNIQUE,
+    salary DECIMAL NOT NULL,
+    department_id INT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (department_id) REFERENCES department(id)
+);
+
+
+CREATE TABLE department(
+    -- Setting up variables id, name
+id INT NOT NUL AUTO_INCREMENT,
+name VARCHAR(30) NOT NULL,
+-- Specifying that the id is unique per record
+PRIMARY KEY(id)
+
+);
