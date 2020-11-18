@@ -1,8 +1,9 @@
 const inquirer=require('inquirer')
+const orm=require('./config/orm')
 
 async function main(){
-    let selected_task =""
-    while (selected_task !=='Exit'){
+    let perform_task =""
+    while (perform_task !=='Exit'){
        const response =await inquirer.prompt ([
 
         {
@@ -11,9 +12,9 @@ async function main(){
             name:'task',
             choices:
             [
-                {name:'I want to view a list of all the Employees in my company', value:'employees_all'},
-                {name:'I want to view a list all employees working under a specific manager', value:'employees_bymanager'},
-                {name:'I want to view all employees by their position', value:'employees_byposition'}
+                {name:'Show all Employees in my company', value:'employees_all'},
+                {name:'Show all employees by their Manager', value:'employees_bymanager'},
+                {name:'Show all employees by their position', value:'employees_byposition'}
             ],
 
         }, // br close for the response object
@@ -21,10 +22,30 @@ async function main(){
        ]); // br close for the inquirer prompt 
 
        
-       selected_task=response.task
-       console.log(selected_task) // working fine
+      perform_task=response.task
+    //    console.log(perform_task) // working fine
+
+perform_task=response.task
+
+switch(perform_task){
+
+    case 'employees_all': await orm.show_employees_all();
+    break;
+
+    case 'employees_bymanager': await orm.show_employees_bymanager();
+    break;
+
+}// br close for switch
+
+
+
 
     } // br close while loop
 
 } // br close for async function
+
+
+
+
+
 main()
