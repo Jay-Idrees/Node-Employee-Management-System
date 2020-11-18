@@ -24,8 +24,8 @@ const orm={
             CONCAT (employee.first_name, ' ', employee.last_name) AS 'Employee Name', 
             role.title as Title,
             department.name AS Department, 
-            role.salary AS Salary, 
-            CONCAT(e.first_name, " ", e.last_name) AS Manager
+            CONCAT('$ ',FORMAT(role.salary , 2)," ") AS Salary, 
+            CONCAT(e_tablecopy.first_name, " ", e_tablecopy.last_name) AS Manager
 
         FROM employee 
 
@@ -33,8 +33,13 @@ const orm={
 
             INNER JOIN department ON role.department_id = department.id
 
-            LEFT JOIN employee AS e ON employee.manager_id = e.id
+            LEFT JOIN employee e_tablecopy ON employee.manager_id = e_tablecopy.id
             ORDER BY id;`);
+
+        // In the code above :
+            //the inner join role is fetching role description column from the role table using roleid
+        // the inner join fetches department description in a similar fashion
+        // the left join- I want to copy information from the same atable as the manager itself is an employee - as I cannot merge the same table with itself- so I make a copy of the table and then merge using the ids
 
             console.table(employees_all)
 
