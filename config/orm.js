@@ -128,21 +128,46 @@ show_employees_byrole: async function() {
     // Prompt which role
     const chosen_role = await inquirer.prompt({
         type: "list", 
-        message: "Which role?", 
+        message: "Please select the Job Role to display Employees working in that position", 
         choices: role_list,
         name: "role_id"
     });
     // Query
-    const result = await query(
+    const employees_byrole = await query(
         `SELECT 
             id, 
             CONCAT(first_name, ' ', last_name) AS "Employee Names for the selected role"
         FROM employee
         WHERE role_id = ?;`, chosen_role.role_id);
-    console.table(result);
+    console.table(employees_byrole);
 },
 //========================================================================
 
+show_job_positions: async function() {
+    // Query
+    const role_info = await query(
+        
+        `SELECT 
+            role.id AS ID, 
+            role.title AS "Current Job Positions", 
+            department.name AS Department, 
+            CONCAT('$ ',FORMAT(role.salary , 2)," ") AS Salary 
+
+        FROM role
+        INNER JOIN department ON role.department_id = department.id
+        ORDER BY ID;`);
+
+
+    console.table(role_info);
+},
+
+//=========================================================================
+
+show_departments: async function() {
+    // Query
+    const result = await query("SELECT * FROM department ORDER BY id;");
+    console.table(result);
+},
 
 
 

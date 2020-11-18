@@ -13,8 +13,20 @@ async function main(){
             choices:
             [
                 {name:'Show all Employees in my company', value:'employees_all'},
+
                 {name:'Show all employees by their Manager', value:'employees_bymanager'},
-                {name:'Show all employees by their position', value:'employees_byrole'}
+
+                {name:'Show all employees by their position', value:'employees_byrole'},
+
+                {name:'Show all job positions in the company', value:'roles_all'},
+
+                {name:'Show all Departments in the company', value:'departments_all'},
+
+                {name:'Modify Employee records', 
+                value:'modify_records'},
+
+                {name:'Exit', 
+                value:'exit'}
             ],
 
         }, // br close for the response object
@@ -38,7 +50,14 @@ switch(perform_task){
     case 'employees_byrole': await orm.show_employees_byrole();
     break;
 
+    case 'roles_all': await orm.show_job_positions();
+    break;
+
+    case 'departments_all': await orm.show_departments();
+    break;
+
 }// br close for switch
+
 
 
 
