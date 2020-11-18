@@ -48,11 +48,13 @@ const orm={
 
     }, // br close show-employees-all async function
 
+    //=================================================================================
+
       show_employees_bymanager: async function (){
 
     // Now I want to display all the employees by their respective managers- This will have a 2 part query
 
-         // 1)  a) Shortlisting managers in the database only 
+         // 1)  a) Shortlisting managers in the database only by managers 
 
         const managers_object = await query(
             
@@ -106,6 +108,43 @@ const orm={
 
 
       }, // br close bymanager function
+//=============================================================================
+
+show_employees_byrole: async function() {
+    // Obtaining all the titles from the roles along with the ids
+    const roles_object = await query(
+        `SELECT 
+         id, title 
+         FROM role;`);
+
+         console.log ('roles_object stores', roles_object)
+
+    const role_list = roles_object.map(function(role_in_roles_object) {
+        return {
+            
+            name: role_in_roles_object.title, 
+            value: role_in_roles_object.id};
+   });
+    // Prompt which role
+    const chosen_role = await inquirer.prompt({
+        type: "list", 
+        message: "Which role?", 
+        choices: role_list,
+        name: "role_id"
+    });
+    // Query
+    const result = await query(
+        `SELECT 
+            id, 
+            CONCAT(first_name, ' ', last_name) AS "Employee Names for the selected role"
+        FROM employee
+        WHERE role_id = ?;`, chosen_role.role_id);
+    console.table(result);
+},
+//========================================================================
+
+
+
 
 
 
