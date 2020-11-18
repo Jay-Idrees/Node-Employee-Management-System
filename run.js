@@ -22,7 +22,7 @@ async function main(){
 
        
        selected_task=response.task
-    //    console.log(selected_task) - working fine
+       console.log(selected_task) // working fine
 
     } // br close while loop
 
