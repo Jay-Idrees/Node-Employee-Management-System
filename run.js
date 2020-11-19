@@ -33,6 +33,10 @@ async function main(){
                 {name:'Delete an existing Employee information from records', 
                 value:'delete_employee'},
 
+                {name:"Update an existing Employee's role in the records", 
+                value:'update_employee_role'},
+
+
 
                 {name:'Exit', 
                 value:'exit'}
@@ -69,6 +73,9 @@ switch(perform_task){
     break;
 
     case 'delete_employee': await orm.delete_employee();
+    break;
+
+    case 'update_employee_role': await orm.update_employee_role();
     break;
 
 
