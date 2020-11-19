@@ -188,7 +188,7 @@ show_departments: async function() {
 //====================================================================
 
 add_employee: async function() {
-    // Query roles
+    // Generating MYSQL query to obtain list of roles 
 
     const roles_object = await query(
         `SELECT 
@@ -204,6 +204,7 @@ add_employee: async function() {
                 value: role_in_roles_object.id};
        });
 
+       // Generating MYSQL query to obtain list of managers
 
        const managers_object = await query(
         `SELECT 
@@ -226,7 +227,7 @@ add_employee: async function() {
                 {
                     type: "input", 
                     name: "first_name",
-                    message: "What is the employee's first name?", 
+                    message: "Please type in the new employee's first name?", 
                     validate: require_input
                 
                 }, 
@@ -234,7 +235,7 @@ add_employee: async function() {
                 {
                     type: "input", 
                     name: "last_name",
-                    message: "What is the employee's last name?",
+                    message: "Please type in the new employee's last name?",
                     validate: require_input
                 }, 
                 
@@ -242,13 +243,13 @@ add_employee: async function() {
                     type: "list", 
                     name: "role_id",
                     choices: role_list,
-                    message: "What is the employee's role?"
+                    message: "Please select a Job position/ title for the new employee"
                 
                 }, 
                 
                 {
                     type: "list", 
-                    message: "Who is the employee's manager?", 
+                    message: "Please assign a manager to the new employee from a list", 
                     choices: manager_list,
                     name: "manager_id" 
                 
@@ -271,10 +272,45 @@ const new_employee = await query(
 
         new_employee_info.manager_id]);
 
-    console.log("Thank you for submiting responses. The new employee info has been saved");
+    console.log(`Thank you for submiting responses. ${new_employee_info.first_name.trim()}'s infromation has been registered as a new employee into the database`);
 },
 
+//=========================================================================
 
+delete_employee: async function() {
+
+    // Generating MYSQL query to obtain a list of employees
+    const employees_object = await query(
+        // contains all the employes in the company- their id and name
+         `SELECT id, 
+          CONCAT(first_name, ' ', last_name) AS 'Employee Name'
+          FROM employee;`);
+
+    const employee_list = employees_object.map(function(employee_in_employees_object) {
+
+         return {
+             name: employee_in_employees_object.name, 
+             value: employee_in_employees_object.id};
+    });
+    // Prompt information
+    const updated_employee = await inquirer.prompt([
+        
+        {
+            type: "list", 
+            choices: employee_list,
+            message: "Which employee to remove?", 
+            name: "id", 
+            
+    }, {
+        type: "list", message: "Are you sure?", name: "sure", choices: ["yes", "no"]
+    }]);
+    // Check if user is sure
+    if (response.sure === "yes") {
+        // Query
+        const result = await query(`DELETE FROM employee WHERE id = ?;`, response.id);
+        console.log("Successfully removed employee");
+    }
+},
 
 
 
