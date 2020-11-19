@@ -9,6 +9,15 @@ require('console.table')
 
 // I am using util package so I can use the promisify feature to convert responses using a callback function to  responses in a promise object and avoid callback nesting and callback hell- it also allows using async await. Generally speaking, this will ensure that untill a mySQL query response has been generated per expectations no further actions are taken, and if there is an error for some reason, that can be detected- it will help us locate that error
 
+
+function require_input(input_text){
+    if(input_text){
+      return true
+    }
+    return 'Please provide an answer, a response is required'
+ }
+ 
+
 const query= util.promisify(connection.query).bind(connection);
 
 const orm={
@@ -175,6 +184,101 @@ show_departments: async function() {
         ORDER BY id;`);
     console.table(departments_info);
 },
+
+//====================================================================
+
+add_employee: async function() {
+    // Query roles
+
+    const roles_object = await query(
+        `SELECT 
+            id, title 
+
+         FROM role
+         ORDER BY id;`);
+
+    const role_list = roles_object.map(function(role_in_roles_object) {
+            return {
+                
+                name: role_in_roles_object.title, 
+                value: role_in_roles_object.id};
+       });
+
+
+       const managers_object = await query(
+        `SELECT 
+            id, 
+            CONCAT(first_name, ' ', last_name) AS name
+
+         FROM employee 
+         ORDER BY id;`);
+
+         const manager_list = managers_object.map(function(manager_in_managers_object) {
+            return {
+                name: manager_in_managers_object.name, 
+                value: manager_in_managers_object.id
+                   };
+            
+       });
+       manager_list.push({name: "None", value: null})
+
+       const new_employee_info = await inquirer.prompt([
+                {
+                    type: "input", 
+                    name: "first_name",
+                    message: "What is the employee's first name?", 
+                    validate: require_input
+                
+                }, 
+                
+                {
+                    type: "input", 
+                    name: "last_name",
+                    message: "What is the employee's last name?",
+                    validate: require_input
+                }, 
+                
+                {
+                    type: "list", 
+                    name: "role_id",
+                    choices: role_list,
+                    message: "What is the employee's role?"
+                
+                }, 
+                
+                {
+                    type: "list", 
+                    message: "Who is the employee's manager?", 
+                    choices: manager_list,
+                    name: "manager_id" 
+                
+                }
+
+    
+
+]);// end of new_employer_info_object inquirer prompt
+
+
+const new_employee = await query(
+    `INSERT INTO employee (first_name, last_name, role_id, manager_id)
+    VALUES (?, ?, ?, ?);`, [
+
+        new_employee_info.first_name.trim(),
+
+        new_employee_info.last_name.trim(), 
+        
+        new_employee_info.role_id, 
+
+        new_employee_info.manager_id]);
+
+    console.log("Thank you for submiting responses. The new employee info has been saved");
+},
+
+
+
+
+
+
 
 //=========================================================================
 
