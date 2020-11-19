@@ -166,16 +166,24 @@ show_job_positions: async function() {
 
 show_departments: async function() {
     // Query
-    const departments = await query(
+    const departments_info = await query(
         `SELECT
             department.id AS ID,
             department.name AS 'Department Name'
 
         FROM department 
         ORDER BY id;`);
-    console.table(departments);
+    console.table(departments_info);
 },
 
+//=========================================================================
+
+exit: function() {
+  
+    connection.end();
+}
+
+//=========================================================================
 
 
 

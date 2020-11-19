@@ -3,13 +3,13 @@ const orm=require('./config/orm')
 
 async function main(){
     let perform_task =""
-    while (perform_task !=='Exit'){
-       const response =await inquirer.prompt ([
+    while (perform_task !=='exit'){
+       const chosen_task =await inquirer.prompt ([
 
         {
             type:'list',
             message:'Please select the task you would like to perform',
-            name:'task',
+            name:'instruction',
             choices:
             [
                 {name:'Show all Employees in my company', value:'employees_all'},
@@ -18,12 +18,21 @@ async function main(){
 
                 {name:'Show all employees by their position', value:'employees_byrole'},
 
-                {name:'Show all job positions in the company', value:'roles_all'},
+                {name:'Show all job positions in the company', value:'roles_info'},
 
-                {name:'Show all Departments in the company', value:'departments_all'},
+                {name:'Show all Departments in the company', value:'departments_info'},
 
-                {name:'Modify Employee records', 
-                value:'modify_records'},
+                // {name:'Modify Employee records', 
+                // value:'modify_records'},
+
+                // Adding Employees
+                {name:'Add new Employee information to records', 
+                value:'add_employee'},
+
+                // Deleting Employees
+                {name:'Delete an existing Employee information from records', 
+                value:'delete_employee'},
+
 
                 {name:'Exit', 
                 value:'exit'}
@@ -34,10 +43,10 @@ async function main(){
        ]); // br close for the inquirer prompt 
 
        
-      perform_task=response.task
+      perform_task=chosen_task.instruction
     //    console.log(perform_task) // working fine
 
-perform_task=response.task
+
 
 switch(perform_task){
 
@@ -50,10 +59,20 @@ switch(perform_task){
     case 'employees_byrole': await orm.show_employees_byrole();
     break;
 
-    case 'roles_all': await orm.show_job_positions();
+    case 'roles_info': await orm.show_job_positions();
     break;
 
-    case 'departments_all': await orm.show_departments();
+    case 'departments_info': await orm.show_departments();
+    break;
+
+    case 'add_employee': await orm.add_employee();
+    break;
+
+    case 'delete_employee': await orm.delete_employee();
+    break;
+
+
+    case 'exit': await orm.exit();
     break;
 
 }// br close for switch
