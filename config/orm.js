@@ -262,7 +262,7 @@ add_employee: async function() {
 
 const new_employee = await query(
     `INSERT INTO employee (first_name, last_name, role_id, manager_id)
-    VALUES (?, ?, ?, ?);`, [
+      VALUES (?, ?, ?, ?);`, [
 
         new_employee_info.first_name.trim(),
 
@@ -297,7 +297,7 @@ delete_employee: async function() {
         {
             type: "list", 
             choices: employee_list,
-            message: "Which employee to remove?", 
+            message: "Please select the employee whos record you intend to delete", 
             name: "id"
             
         },
@@ -325,7 +325,65 @@ delete_employee: async function() {
 
 //=========================================================================
 
+update_employee_role: async function() {
+    // Generating MYSQL query to obtain list of roles 
+    const roles_object = await query(
+        `SELECT 
+            id, title 
 
+         FROM role
+         ORDER BY id;`);
+
+    const role_list = roles_object.map(function(role_in_roles_object) {
+            return {
+                
+                name: role_in_roles_object.title, 
+                value: role_in_roles_object.id};
+       });
+  
+    // Generating MYSQL query to obtain a list of employees
+    const employees_object = await query(
+        // contains all the employes in the company- their id and name
+         `SELECT id, 
+          CONCAT(first_name, ' ', last_name) AS name
+          FROM employee;`);
+
+    const employee_list = employees_object.map(function(employee_in_employees_object) {
+
+         return {
+             name: employee_in_employees_object.name, 
+             value: employee_in_employees_object.id};
+    });
+    // Prompt information
+    const selected_employee = await inquirer.prompt([
+        
+        
+        {
+            type: "list", 
+            name: "id",
+            choices: employee_list,
+            message: "Please select the employee who's role you intend to update"
+        
+        },
+
+    
+    
+        {
+            type: "list", 
+            name: "role_id",
+            choices: role_list,
+            message: "Please select a new Job position/ title for the employee"
+        
+        }, 
+
+]);
+    // Query
+    const updated_employee = await query(
+        `UPDATE employee 
+         SET role_id = ? 
+         WHERE id = ?;`, [selected_employee.role_id, selected_employee.id]);
+    console.log("The employee's role has been successfully updated in the records");
+},
 
 
 //=========================================================================

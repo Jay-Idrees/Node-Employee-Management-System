@@ -53,7 +53,7 @@ async function main(){
 
 
 switch(perform_task){
-
+// Notice that 0rm.function are plugins for the respective async await functions
     case 'employees_all': await orm.show_employees_all();
     break;
 
