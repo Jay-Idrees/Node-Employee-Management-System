@@ -154,6 +154,7 @@ show_job_positions: async function() {
             CONCAT('$ ',FORMAT(role.salary , 2)," ") AS Salary 
 
         FROM role
+
         INNER JOIN department ON role.department_id = department.id
         ORDER BY ID;`);
 
@@ -165,8 +166,14 @@ show_job_positions: async function() {
 
 show_departments: async function() {
     // Query
-    const result = await query("SELECT * FROM department ORDER BY id;");
-    console.table(result);
+    const departments = await query(
+        `SELECT
+            department.id AS ID,
+            department.name AS 'Department Name'
+
+        FROM department 
+        ORDER BY id;`);
+    console.table(departments);
 },
 
 
