@@ -276,14 +276,13 @@ const new_employee = await query(
 },
 
 //=========================================================================
-
 delete_employee: async function() {
 
     // Generating MYSQL query to obtain a list of employees
     const employees_object = await query(
         // contains all the employes in the company- their id and name
          `SELECT id, 
-          CONCAT(first_name, ' ', last_name) AS 'Employee Name'
+          CONCAT(first_name, ' ', last_name) AS name
           FROM employee;`);
 
     const employee_list = employees_object.map(function(employee_in_employees_object) {
@@ -293,26 +292,36 @@ delete_employee: async function() {
              value: employee_in_employees_object.id};
     });
     // Prompt information
-    const updated_employee = await inquirer.prompt([
+    const selected_employee = await inquirer.prompt([
         
         {
             type: "list", 
             choices: employee_list,
             message: "Which employee to remove?", 
-            name: "id", 
+            name: "id"
             
-    }, {
-        type: "list", message: "Are you sure?", name: "sure", choices: ["yes", "no"]
-    }]);
-    // Check if user is sure
-    if (response.sure === "yes") {
-        // Query
-        const result = await query(`DELETE FROM employee WHERE id = ?;`, response.id);
-        console.log("Successfully removed employee");
+        },
+    
+       {
+            type: "list",
+            message: "Are you sure you want to permanently delete this record?", 
+            name: "confirm", 
+            choices: ["yes", "no"]
+       }
+
+        ]);// end of inquireer prompt for selected_employee
+
+    // Verify before deleting
+    if (selected_employee.confirm === "yes") {
+        // Execute the query to delete record
+        const deleted_employee = await query(
+
+            `DELETE FROM employee WHERE id = ?;`, 
+            selected_employee.id);
+        
+            console.log("The employee's record has been successfully deleted");
     }
 },
-
-
 
 
 
