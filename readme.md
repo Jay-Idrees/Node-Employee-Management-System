@@ -72,11 +72,19 @@ By completing this project I was able to master application of the following pro
 
 - Using Object Relational Mapping (ORM) to target specfic CRUD operation functions in MYSQL
 
-- Using the Case Switch method in Javascript by linking it to inquirer and triggering functions to perform CRUD operations and performing relevant queries in MYSQL database. For example if the user wants to add a new employee. The Inquirer will help select that option via a terminal prompt and then new information typed by the user is captured into variables and passed into functions generating queries for inserting this new data into MYSQL.
+- Using the Case Switch method in Javascript by linking it to inquirer and triggering functions to perform CRUD operations and performing relevant queries on MYSQL database. For example if the user wants to add a new employee. The Inquirer will help select that option via a terminal prompt and then new information typed by the user is captured into variables and passed into functions generating queries for inserting this new data into MYSQL.
 
 - Joining/Merging tables in MYSQL database using queries to perfrom inner join, left join and right join. E-g, displaying complete employee information my merging employee and role tables to display employee name, salary etc while using employee id as primary/foreign key
 
 - Merging a MYSQL table with itself. This means making a copy of an existing table, creating a new column and merging this new column with the original table. E-g. In this app for example, both managers and employees are included in the employee's table as they are all employees. So in order to create a new column to display the managers for each of the employees (that are not managers) a copy of the employee table is created and then a new column displaying manager for each employee is created using a MYSQL query. This new intermediary table is then merged with the original table
+
+- Using concatination to display complete name by combining first name and last name variables
+
+- Using string interpolation for enabling use of Javascript variables as plugins for the MYSQL queries
+
+- Formatting salary using the FORMAT command in MYSQL with $ and comma separation for significant figures
+
+- Mastery over the MYSQL query commands SELECT, CONCAT, FROM, GROUP BY, WHERE, INSERT INTO, DELETE FROM, ORDER BY, INNER JOIN, LEFT JOIN, RIGHT JOIN
 
 - Using Node.JS to create a high quality readme file
 
