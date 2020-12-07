@@ -9,7 +9,7 @@ This project is a command line interface application that is designed for a comp
 
 Jay J. Idrees, MD, MPH<br />
 Full-Stack Software Engineer<br />
-[JIDREES](https://github.com/Jay-Idrees) ![Github](http://img.shields.io/badge/github-black?style=flat&logo=github)<br />
+[Jay-Idrees](https://github.com/Jay-Idrees) ![Github](http://img.shields.io/badge/github-black?style=flat&logo=github)<br />
 jidrees@live.com
 
 
