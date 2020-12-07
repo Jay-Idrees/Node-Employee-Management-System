@@ -3,13 +3,13 @@
 ## About the Project
 This project is a command line interface application that is designed for a company to manage its employee databases. It provides options to add a new employee, add specific employee information according to the role, etc. The employee information is stored in tables in MYSQL database. The user also has the flexibility to update records and can search for employee records in order to obtain information regarding an employee's salary, department etc. I developed this application during the seventh week of the coding bootcamp at Columbia University, NY. Date of publication: 11/03/2020
 
-[Watch a video demonstrating the app functionality]()<br />
+[Watch a video demonstrating the app functionality](https://youtu.be/XO_6Aczd0DY)<br />
 
 ## Contact Programmer for questions
 
 Jay J. Idrees, MD, MPH<br />
 Full-Stack Software Engineer<br />
-[JIDREES](https://github.com/jidrees) ![Github](http://img.shields.io/badge/github-black?style=flat&logo=github)<br />
+[JIDREES](https://github.com/Jay-Idrees) ![Github](http://img.shields.io/badge/github-black?style=flat&logo=github)<br />
 jidrees@live.com
 
 
